@@ -131,7 +131,7 @@ const pets = [
      id: 17,
       name: "Muffin",
       color: "Yellow",
-      specialSkill: "Does not freak out if you haven’t seen his favorite movie (The Big Lebowski).",
+      specialSkill: "Does not freak out if you havent seen his favorite movie (The Big Lebowski).",
       type: "cat",
       imageUrl: "http://www.funnycatsite.com/pictures/Close_Up_Yawn.jpg"
     },
@@ -240,3 +240,34 @@ const pets = [
       imageUrl: "http://lsae2.iypcdn.com/static//modules/uploads/photos/language1/dino-live-22.jpg?119"
     }
   ];
+
+  const renderToDom = (divId, htmlToRender) => {
+    const selectedDiv = document.querySelector(divId);
+    selectedDiv.innerHTML = htmlToRender;
+  };
+  
+  //const cardsOnDom = (pets) => {
+    let domString = "";
+    for (const pet of pets) {
+      domString += `<div class="card" style="width: 18rem;">
+      <div class="card-header">
+          <h5>${pet.name}</h5>
+      </div>
+          <img src="${pet.imageUrl}" class="card-img-top" alt="...">
+        <div>
+          <h5>${pet.color}</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">${pet.specialSkill}</p>
+        </div>
+        <div class="card-footer text-body-secondary">
+          <h5>${pet.type}</h5>
+        </div>
+      </div>`;
+    }
+
+    renderToDom("#app", domString);
+  //};
+
+console.log(pets)
+console.log("this is hooked up")
