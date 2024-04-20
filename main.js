@@ -269,5 +269,9 @@ const pets = [
     renderToDom("#app", domString);
   //};
 
+const filter = (pets, type) => {
+  const typeArray =[];
+}
+
 console.log(pets)
 console.log("this is hooked up")
