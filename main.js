@@ -291,16 +291,37 @@ const typeFilter = (pets, typeString) => {
 // ******************** //
 
 // 1. Target both of the buttons on the DOM
-const showAllButton = document.querySelector("#show-btn");
-const showBlueButton = document.querySelector("#favorites");
+//const showAllButton = document.querySelector("#show-btn");
+//const showBlueButton = document.querySelector("#favorites");
 
 // 2. Add click event to show all the instuctors on button click using the function we created above
-showAllButton.addEventListener("click", () => {
-  cardsOnDom(team);
-});
+// //showAllButton.addEventListener("click", () => {
+//   cardsOnDom(team);
+// });
 
 // 3. Add click event to filter all the instructors whose favorite color is blue on button click
-showBlueButton.addEventListener("click", () => {
-  const blueTeamMembers = filter(team, "blue");
-  cardsOnDom(blueTeamMembers);
+// showBlueButton.addEventListener("click", () => {
+//   const blueTeamMembers = filter(team, "blue");
+//   cardsOnDom(blueTeamMembers);
+// });
+
+const createPet = (e) => {
+  e.preventDefault();
+  const newPetObj ={
+    id: pets.length +1,
+    name: document.querySelector("#name").value,
+    color: document.querySelector("#color").value,
+    specialSkill: querySelector("#specialSkill").value,
+    type: document.querySelector("#type").value,
+    imageUrl: document.querySelector("#imageUrl").value,
+  };
+  console.log("whenclicked")
+  pets.push(newPetObj)
+  console.log("pets", pets)
+  cardsOnDom(pets);
+  form.reset();
+}
+const addAPet = document.querySelector("#form-submit")
+addAPet.addEventListener("submit", () => {
+  cardsOnDom(pets);
 });
