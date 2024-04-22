@@ -241,33 +241,108 @@ const pets = [
     }
   ];
 
-  const renderToDom = (divId, htmlToRender) => {
-    const selectedDiv = document.querySelector(divId);
-    selectedDiv.innerHTML = htmlToRender;
-  };
-  
-  //const cardsOnDom = (pets) => {
-    let domString = "";
-    for (const pet of pets) {
-      domString += `<div class="card" style="width: 18rem;">
-      <div class="card-header">
-          <h5>${pet.name}</h5>
-      </div>
-          <img src="${pet.imageUrl}" class="card-img-top" alt="...">
-        <div>
-          <h5>${pet.color}</h5>
-        </div>
-        <div class="card-body">
-          <p class="card-text">${pet.specialSkill}</p>
-        </div>
-        <div class="card-footer text-body-secondary">
-          <h5>${pet.type}</h5>
-        </div>
-      </div>`;
+ // Render to DOM utility function
+const renderToDom = (divId, htmlToRender) => {
+  const selectedDiv = document.querySelector(divId);
+  selectedDiv.innerHTML = htmlToRender;
+};
+
+// get the cards on the DOM
+const cardsOnDom = (pets) => {
+  let domString = "";
+  for (const pet of pets) {
+    domString += `<div class="pet-card" style="width: 18rem;">
+    <h3 class="card-name">${pet.name}</h3>
+    <img src="${pet.imageUrl}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <p class="card-text">${pet.color}</p>
+      <p class="card-text">${pet.specialSkill}</p>
+      <p class="card-text">${pet.type}</p>
+    </div>
+    <button type="button" class="btn btn-danger" id="delete--${pet.id}">Delete</button>
+  </div>`;
+  }
+
+  renderToDom("#app", domString);
+};
+
+// function to filter pets with specific type
+const typeFilter = (pets, typeString) => {
+  const typeArray = [];
+
+  array.forEach((pet) => {
+     if (pet.type === typeString) {
+      typeArray.push(pet);
+     }
+   });
+
+  for (const pet of pets) {
+    if (pet.type === typeString) {
+      typeArray.push(pet);
     }
+  }
 
-    renderToDom("#app", domString);
-  //};
+  return typeArray;
+};
 
-console.log(pets)
-console.log("this is hooked up")
+// 1. Get all the cards to render on the DOM
+// cardsOnDom(team);
+
+// 2. Get only the teammates whose favorite color is blue on the DOM
+
+// ******************** //
+// ****** EVENTS ****** //
+// ******************** //
+
+// 1. Target both of the buttons on the DOM
+//const showAllButton = document.querySelector("#show-btn");
+//const showBlueButton = document.querySelector("#favorites");
+
+// 2. Add click event to show all the instuctors on button click using the function we created above
+// //showAllButton.addEventListener("click", () => {
+//   cardsOnDom(team);
+// });
+
+// 3. Add click event to filter all the instructors whose favorite color is blue on button click
+// showBlueButton.addEventListener("click", () => {
+//   const blueTeamMembers = filter(team, "blue");
+//   cardsOnDom(blueTeamMembers);
+// });
+
+const createPet = (e) => {
+  e.preventDefault();
+  const newPetObj ={
+    id: pets.length +1,
+    name: document.querySelector("#name").value,
+    color: document.querySelector("#color").value,
+    specialSkill: querySelector("#specialSkill").value,
+    type: document.querySelector("#type").value,
+    imageUrl: document.querySelector("#imageUrl").value,
+  };
+  console.log("whenclicked")
+  pets.push(newPetObj)
+  console.log("pets", pets)
+  cardsOnDom(pets);
+  form.reset();
+}
+const addAPet = document.querySelector("#form-submit")
+addAPet.addEventListener("submit", () => {
+  cardsOnDom(pets);
+});
+
+//this is where i'm building my delete functionality
+
+const app = document.querySelector("#app");
+app.addEventListener("click", (e) => {
+  if (e.target.id.includes("delete")) {
+    const [, id] = e.target.id.split("--");
+    pets.splice(index, 1);
+    console.log("pets", pets)
+    cardsOnDom(pets);
+  }
+});
+
+const startApp = () => {
+  cardsOnDom(pets);
+};
+startApp();
