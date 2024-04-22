@@ -267,17 +267,17 @@ const cardsOnDom = (pets) => {
 };
 
 // function to filter pets with specific type
-const typeFilter = (pets, typeString) => {
+const filter = (array, petType) => {
   const typeArray = [];
 
   array.forEach((pet) => {
-     if (pet.type === typeString) {
-      typeArray.push(pet);
-     }
-   });
+    if (pets.type === petType) {
+      typeArray.push(pets);
+   }
+ });
 
-  for (const pet of pets) {
-    if (pet.type === typeString) {
+  for (const pet of array) {
+    if (pet.type === petType) {
       typeArray.push(pet);
     }
   }
@@ -285,6 +285,29 @@ const typeFilter = (pets, typeString) => {
   return typeArray;
 };
 
+const showAllButton = document.querySelector("#show-btn")
+const showDogsButton = document.querySelector("#show-dogs")
+const showCatsButton = document.querySelector("#show-cats")
+const showDinosButton = document.querySelector("#show-dinos")
+
+showAllButton.addEventListener("click", ()=> {
+  cardsOnDom(pets);
+});
+
+showDogsButton.addEventListener("click", () => {
+  const dogPets = filter(pets, "dog");
+  cardsOnDom(dogPets);
+});
+
+showCatsButton.addEventListener("click", () => {
+  const catPets = filter(pets, "cat");
+  cardsOnDom(catPets);
+});
+
+showDinosButton.addEventListener("click", () => {
+  const dinoPets = filter(pets, "dino");
+  cardsOnDom(dinoPets);
+});
 // 1. Get all the cards to render on the DOM
 // cardsOnDom(team);
 
@@ -311,11 +334,12 @@ const typeFilter = (pets, typeString) => {
 
 const createPet = (e) => {
   e.preventDefault();
+
   const newPetObj ={
     id: pets.length +1,
     name: document.querySelector("#name").value,
     color: document.querySelector("#color").value,
-    specialSkill: querySelector("#specialSkill").value,
+    specialSkill: document.querySelector("#specialSkill").value,
     type: document.querySelector("#type").value,
     imageUrl: document.querySelector("#imageUrl").value,
   };
@@ -326,7 +350,7 @@ const createPet = (e) => {
   form.reset();
 }
 const addAPet = document.querySelector("#form-submit")
-addAPet.addEventListener("submit", () => {
+addAPet.addEventListener("submit", (createPet) => {
   cardsOnDom(pets);
 });
 
