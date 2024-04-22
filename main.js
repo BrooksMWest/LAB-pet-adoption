@@ -165,7 +165,7 @@ const pets = [
       color: "Red",
       specialSkill: "Owns a Nintendo Power Glove.",
       type: "dino",
-      imageUrl: "https://i1.sndcdn.com/artworks-000298749006-5gqxt7-t500x500.jpg"
+      imageUrl: "https://images.pond5.com/illustration-cute-dinosaur-cartoon-characters-illustration-226751626_iconl_nowm.jpeg"
     },
     {
         id: 22,
@@ -271,16 +271,16 @@ const filter = (array, petType) => {
   const typeArray = [];
 
   array.forEach((pet) => {
-    if (pets.type === petType) {
-      typeArray.push(pets);
+    if (pet.type === petType) {
+      typeArray.push(pet);
    }
  });
 
-  for (const pet of array) {
-    if (pet.type === petType) {
-      typeArray.push(pet);
-    }
-  }
+  // for (const pet of array) {
+  //   if (pet.type === petType) {
+  //     typeArray.push(pet);
+  //   }
+  // }
 
   return typeArray;
 };
@@ -331,7 +331,7 @@ showDinosButton.addEventListener("click", () => {
 //   const blueTeamMembers = filter(team, "blue");
 //   cardsOnDom(blueTeamMembers);
 // });
-
+const form = document.querySelector("form");
 const createPet = (e) => {
   e.preventDefault();
 
@@ -343,20 +343,19 @@ const createPet = (e) => {
     type: document.querySelector("#type").value,
     imageUrl: document.querySelector("#imageUrl").value,
   };
-  console.log("whenclicked")
+  
   pets.push(newPetObj)
   console.log("pets", pets)
   cardsOnDom(pets);
   form.reset();
 }
-const addAPet = document.querySelector("#form-submit")
-addAPet.addEventListener("submit", (createPet) => {
-  cardsOnDom(pets);
-});
+//const addAPet = document.querySelector("#form-submit");
+form.addEventListener("submit", createPet);
 
 //this is where i'm building my delete functionality
 
 const app = document.querySelector("#app");
+
 app.addEventListener("click", (e) => {
   if (e.target.id.includes("delete")) {
     const [, id] = e.target.id.split("--");
