@@ -157,7 +157,7 @@ const pets = [
       color: "Black",
       specialSkill: "Uses litter box at appropriate hours.",
       type: "cat",
-      imageUrl: "https://i.redd.it/i-asked-chatgpt-to-make-a-cute-dog-and-then-make-him-even-v0-x8zgj23x6m2c1.jpg?width=768&format=pjpg&auto=webp&s=9de2909fd435040a670215885e40d6dbe07ef6ec"
+      imageUrl: "https://www.wfla.com/wp-content/uploads/sites/71/2021/10/Black-Cat-2.jpg?w=2560&h=1440&crop=1"
     },
     {
       id: 21,
