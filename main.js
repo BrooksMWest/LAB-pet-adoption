@@ -251,7 +251,7 @@ const renderToDom = (divId, htmlToRender) => {
 const cardsOnDom = (pets) => {
   let domString = "";
   for (const pet of pets) {
-    domString += `<div class="pet-card" style="width: 18rem;">
+    domString += `<div class="card" style="width: 18rem;">
     <h3 class="card-name">${pet.name}</h3>
     <img src="${pet.imageUrl}" class="card-img-top" alt="...">
     <div class="card-body">
