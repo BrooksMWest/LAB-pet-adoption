@@ -242,15 +242,17 @@ const pets = [
   ];
 
  // Render to DOM utility function
+ //takes the params when we use the function - divID (where we want HTML rendered) and htmlTiRender (string we want in the specific div)
 const renderToDom = (divId, htmlToRender) => {
-  const selectedDiv = document.querySelector(divId);
-  selectedDiv.innerHTML = htmlToRender;
+  const selectedDiv = document.querySelector(divId); //  QS finds and returns the first element that matches the divId
+  selectedDiv.innerHTML = htmlToRender;//sets the innerHTML property of the selecte div and replaces it with the new content
 };
 
+//this is my card body
 // get the cards on the DOM
 const cardsOnDom = (pets) => {
-  let domString = "";
-  for (const pet of pets) {
+  let domString = "";//initializes the empty string variable that we will be using to store the HTML for the cards
+  for (const pet of pets) {//the loop that iterates over each pet object in the pets array
     domString += `<div class="card" style="width: 18rem;">
     <h3 class="card-name">${pet.name}</h3>
     <img src="${pet.imageUrl}" class="card-img-top" alt="...">
@@ -259,44 +261,41 @@ const cardsOnDom = (pets) => {
       <p class="card-text">${pet.specialSkill}</p>
       <p class="card-text">${pet.type}</p>
     </div>
-    <button type="button" class="btn btn-danger" id="delete--${pet.id}">Delete</button>
+    <button type="button" class="btn btn-danger" id="delete--${pet.id}">Delete</button>//delete button that uses pet.id to delete the right pet
   </div>`;
   }
-
+  //this is where we call our renderToDom utility function from above - we pass it the divID(#app) and the domString we created with our for loop above
   renderToDom("#app", domString);
 };
 
 // function to filter pets with specific type
+//takes array and petType as parameters and push them into the typeArray
 const filter = (array, petType) => {
-  const typeArray = [];
+  const typeArray = [];//initializes the array where we'll keep our pets
 
-  array.forEach((pet) => {
-    if (pet.type === petType) {
-      typeArray.push(pet);
+  array.forEach((pet) => {//loop that iterates over each pet in the input array
+    if (pet.type === petType) {//condition that checks the pet.type of the object against the petType parameter
+      typeArray.push(pet);//if the condition is true the pet object is pushed into the typeArray
    }
  });
 
-  // for (const pet of array) {
-  //   if (pet.type === petType) {
-  //     typeArray.push(pet);
-  //   }
-  // }
 
-  return typeArray;
+  return typeArray;//returns the filtered array
 };
 
-const showAllButton = document.querySelector("#show-btn")
+// these variables connect my event listeners to the buttons on the index.html
+const showAllButton = document.querySelector("#show-btn") //query selector is how we find things on the DOM
 const showDogsButton = document.querySelector("#show-dogs")
 const showCatsButton = document.querySelector("#show-cats")
 const showDinosButton = document.querySelector("#show-dinos")
 
-showAllButton.addEventListener("click", ()=> {
+showAllButton.addEventListener("click", ()=> {//event listener for my show all pets button - has no filter
   cardsOnDom(pets);
 });
 
-showDogsButton.addEventListener("click", () => {
-  const dogPets = filter(pets, "dog");
-  cardsOnDom(dogPets);
+showDogsButton.addEventListener("click", () => {//event listener for my dogs button - uses filter function from above to get pets with type: "dog"
+  const dogPets = filter(pets, "dog");//where we actually use the filter we made above
+  cardsOnDom(dogPets);//function puts the filtered dogPets on the dom when we clock the showDogsButton
 });
 
 showCatsButton.addEventListener("click", () => {
@@ -308,65 +307,45 @@ showDinosButton.addEventListener("click", () => {
   const dinoPets = filter(pets, "dino");
   cardsOnDom(dinoPets);
 });
-// 1. Get all the cards to render on the DOM
-// cardsOnDom(team);
 
-// 2. Get only the teammates whose favorite color is blue on the DOM
 
-// ******************** //
-// ****** EVENTS ****** //
-// ******************** //
+//where my form code starts
+const form = document.querySelector("form");//declares my form variable and tells it where to go on the DOM
+const createPet = (e) => {//function that takes (event) as the parameter and handles the form submission
+  e.preventDefault();//stops the page from releading(default behavior) on submission
 
-// 1. Target both of the buttons on the DOM
-//const showAllButton = document.querySelector("#show-btn");
-//const showBlueButton = document.querySelector("#favorites");
-
-// 2. Add click event to show all the instuctors on button click using the function we created above
-// //showAllButton.addEventListener("click", () => {
-//   cardsOnDom(team);
-// });
-
-// 3. Add click event to filter all the instructors whose favorite color is blue on button click
-// showBlueButton.addEventListener("click", () => {
-//   const blueTeamMembers = filter(team, "blue");
-//   cardsOnDom(blueTeamMembers);
-// });
-const form = document.querySelector("form");
-const createPet = (e) => {
-  e.preventDefault();
-
-  const newPetObj ={
+  const newPetObj = {//here we define the newPetObj we're creating that will go into our pets array
     id: pets.length +1,
-    name: document.querySelector("#name").value,
+    name: document.querySelector("#name").value,//values on these are taken from to form input IDs
     color: document.querySelector("#color").value,
     specialSkill: document.querySelector("#specialSkill").value,
     type: document.querySelector("#type").value,
     imageUrl: document.querySelector("#imageUrl").value,
   };
   
-  pets.push(newPetObj)
-  console.log("pets", pets)
-  cardsOnDom(pets);
-  form.reset();
+  pets.push(newPetObj)//uses push method to put newPetObj into the pets array
+  cardsOnDom(pets);//updates the dom to display the updated pets array
+  form.reset();//resets the form after the pet has been added
 }
-//const addAPet = document.querySelector("#form-submit");
-form.addEventListener("submit", createPet);
+
+form.addEventListener("submit", createPet); //event listener that runs createPet function when a user clicks submit
+
 
 //this is where i'm building my delete functionality
 
-const app = document.querySelector("#app");
+const app = document.querySelector("#app");//selects the HTML element with the id "app" and assigns it to const app
 
-app.addEventListener("click", (e) => {
-  if (e.target.id.includes("delete")) {
-    const [, id] = e.target.id.split("--");
-    const index = pets.findIndex(e => e.id === Number(id));
-    pets.splice(index, 1);
-    console.log("pets", pets)
-    cardsOnDom(pets);
+app.addEventListener("click", (e) => {//adds the event listener to the app element when a user clicks delete. the e parameter is the event
+
+  if (e.target.id.includes("delete")) {//condition that the clicked element has the string "delete"
+    const [, id] = e.target.id.split("--");//this line splits the the id of the clicked element by "--" and assigns the second part to the variable "id"
+    const index = pets.findIndex(e => e.id === Number(id));//sets the index variable of the pet object in the pets array whose id matches the id extracted from the clicked elements' ID
+    pets.splice(index, 1);//uses the splice method to remove the pet object from the array at the index we just found
+    cardsOnDom(pets);//we call this function to update the DOM with the new pets array after we've clicked delete
   }
 });
 
-const startApp = () => {
+const startApp = () => {//function that puts all the cards on the dom right awayby calling cardsOnDom and passing in pets
   cardsOnDom(pets);
 };
-startApp();
+startApp(); //calls the finction we just defined above.
